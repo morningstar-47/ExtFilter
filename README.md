@@ -1,57 +1,116 @@
 # File-cleaner
 
-Script de gestion de fichiers ``Rechercher et supprimer des fichiers avec extension``
+Un utilitaire Python pour la gestion de fichiers par extension.
 
-Ce script Python permet aux utilisateurs de rechercher et de supprimer des fichiers avec une extension spécifiée dans un répertoire spécifié. Il permet également aux utilisateurs d'afficher le contenu de chaque fichier avec l'extension spécifiée.
+## Description
 
-**Installation et utilisation**
-Pour utiliser ce script, suivez ces instructions :
+File-cleaner est un outil en ligne de commande qui permet de :
+- Rechercher des fichiers par extension
+- Afficher leur contenu
+- Les supprimer en toute sécurité (envoi à la corbeille)
+- Analyser la distribution des fichiers par extension dans un répertoire
 
-1. Clonez ce référentiel sur votre ordinateur local.
+## Installation
+
+1. Cloner le dépôt :
+```bash
+git clone https://github.com/morningstar-47/ExtFilter.git
+cd File-cleaner
 ```
-git clone https://github.com/Claude-Mops47/File-cleaner.git
+
+2. Installer les dépendances :
+```bash
+pip install -r requirements.txt
 ```
 
-2. Installez les dépendances requises en exécutant `pip install -r requirements.txt.`
+## Utilisation
 
-Accédez au répertoire contenant le script dans la ligne de commande.
-Exécutez le script en utilisant `python main.py <répertoire> <extension> --option(s).`
-Où <répertoire> est le chemin d'accès au répertoire dans lequel vous souhaitez effectuer la recherche, <extension> est l'extension de fichier que vous souhaitez rechercher (sans le point) et --option(s) est une ou plusieurs des options suivantes :
+Le script propose deux commandes principales :
 
-- `-d ou --delete` : supprime tous les fichiers avec l'extension spécifiée dans le dossier spécifié.
-- `-c ou --confirm` : demande confirmation avant de supprimer ou afficher le contenu de chaque fichier.
-- `-p ou --display` : affiche le contenu de chaque fichier avec l'extension spécifiée dans le dossier spécifié.
-- `-s ou --sort-order` : définit l'ordre de tri de la liste des fichiers. Les options possibles sont `asc` pour un tri alphabétique croissant, `desc` pour un tri alphabétique décroissant et `random` pour un tri aléatoire.
-  
-Par exemple, 
-- pour rechercher tous les fichiers texte du dossier Documents et afficher leur contenu, exécutez la commande suivante :
-``python file_cleaner.py /Users/username/Documents txt -p``
-- Pour supprimer tous les fichiers avec l'extension .txt dans le dossier Documents :
-``python file_cleaner.py /Users/username/Documents txt -d``
-- Pour afficher le contenu de tous les fichiers avec l'extension .txt dans le dossier Documents, triés par ordre alphabétique décroissant :
-``python file_cleaner.py /Users/username/Documents txt -p -s desc``
+### 1. Rechercher et gérer des fichiers par extension
 
-**Dépendances**
-Ce script nécessite les bibliothèques Python suivantes :
+```bash
+python file_cleaner.py search <répertoire> <extension> [options]
+```
 
-Cliquez sur
-os
-send2trash
-pathlib
-aléatoire
-  
-Ceux-ci peuvent être installés à l'aide de pip. Pour les installer, exécutez la commande suivante :
+**Arguments :**
+- `<répertoire>` : Chemin du répertoire à analyser
+- `<extension>` : Extension des fichiers à rechercher (avec ou sans le point)
 
-``pip install -r exigences.txt``
+**Options :**
+- `-d, --delete` : Supprime les fichiers trouvés (les envoie à la corbeille)
+- `-c, --confirm` : Demande confirmation avant chaque action
+- `-p, --display` : Affiche le contenu des fichiers trouvés
+- `-s, --sort-order [asc|desc|random]` : Définit l'ordre de tri des fichiers (par défaut : asc)
 
-**Contribuant**
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir un problème ou à soumettre une pull request si vous avez des suggestions ou des améliorations.
+### 2. Analyser la distribution des fichiers par extension
 
-Assurez-vous de tester soigneusement vos modifications avant de soumettre une demande d'extraction.
-  
-**Auteur**
-Ce script a été créé par `Claude-Mops47`.
+```bash
+python file_cleaner.py analyze <répertoire>
+```
 
+Cette commande affiche un résumé des types de fichiers présents dans le répertoire, classés par leur nombre.
 
-**Licence**
-Ce projet est sous licence MIT. Voir LICENSE.md pour plus d'informations.
+## Exemples d'utilisation
+
+### Rechercher des fichiers texte et afficher leur contenu
+```bash
+python file_cleaner.py search ~/Documents txt --display
+```
+
+### Rechercher et supprimer des fichiers temporaires avec confirmation
+```bash
+python file_cleaner.py search ~/Downloads tmp --delete --confirm
+```
+
+### Afficher le contenu des fichiers logs dans l'ordre chronologique inverse
+```bash
+python file_cleaner.py search /var/log log --display --sort-order desc
+```
+
+### Analyser les types de fichiers présents dans un répertoire
+```bash
+python file_cleaner.py analyze ~/Projects
+```
+
+## Fonctionnalités
+
+- **Recherche intelligente** : Trouve les fichiers par extension, avec ou sans le point initial
+- **Tri flexible** : Affiche les résultats par ordre alphabétique croissant/décroissant ou aléatoire
+- **Suppression sécurisée** : Utilise send2trash pour envoyer les fichiers à la corbeille au lieu de les supprimer définitivement
+- **Confirmation interactive** : Option pour confirmer chaque action
+- **Visualisation du contenu** : Affiche le contenu des fichiers texte
+- **Analyse de répertoire** : Compte et affiche la distribution des types de fichiers
+
+## Configuration requise
+
+- Python 3.6 ou supérieur
+- Modules Python :
+  - click
+  - send2trash
+  - pathlib
+
+## Tests
+
+Pour exécuter les tests unitaires :
+
+```bash
+python -m unittest test_file_cleaner.py
+```
+
+## Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à :
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/amazing-feature`)
+3. Commit vos changements (`git commit -m 'Add amazing feature'`)
+4. Push vers la branche (`git push origin feature/amazing-feature`)
+5. Ouvrir une Pull Request
+
+## Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE.md` pour plus d'informations.
+
+## Auteur
+
+Créé par [Claude-Mops47](https://github.com/morningstar-47)
